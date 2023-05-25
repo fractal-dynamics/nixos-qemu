@@ -31,15 +31,19 @@ with lib;
     };
 
     virtualisation = {
-      diskSize = 8000; # MB
-      memorySize = 2048; # MB
+      diskSize = 12000; # MB
+      memorySize = 8048; # MB
       writableStoreUseTmpfs = false;
     };
 
     services.openssh.enable = true;
     services.openssh.permitRootLogin = "yes";
     networking.firewall.enable = true;
-    networking.firewall.allowedTCPPorts = [80 3000 4646];
+    networking.firewall.allowedTCPPorts = [22 9200];
+    services.opensearch.enable = true;
+    services.opensearch.settings = {
+      "network.host" = "0.0.0.0";
+    };
     # services.nginx.enable = true;
     # services.nomad.enable = true;
     # services.nomad.settings = {
@@ -59,20 +63,20 @@ with lib;
     #     enabled = true;
     #     };
     # };
-    services.hydra = {
-        enable = true;
-        hydraURL = "http://0.0.0.0:3000"; # externally visible URL
-        notificationSender = "hydra@localhost"; # e-mail of hydra service
-        # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
-        buildMachinesFiles = [];
-        # you will probably also want, otherwise *everything* will be built from scratch
-        useSubstitutes = true;
-    };
+    # services.hydra = {
+    #     enable = true;
+    #     hydraURL = "http://0.0.0.0:3000"; # externally visible URL
+    #     notificationSender = "hydra@localhost"; # e-mail of hydra service
+    #     # a standalone hydra will require you to unset the buildMachinesFiles list to avoid using a nonexistant /etc/nix/machines
+    #     buildMachinesFiles = [];
+    #     # you will probably also want, otherwise *everything* will be built from scratch
+    #     useSubstitutes = true;
+    # };
     nix.extraOptions = "experimental-features = nix-command flakes";
-    environment.systemPackages = with pkgs;
-      [ # some relevant packages here
-        pkgs.ghc
-      ];
+    # environment.systemPackages = with pkgs;
+    #   [ # some relevant packages here
+
+    #   ];
 
     # we could alternatively hook root or a custom user
     # to some ssh key pair
