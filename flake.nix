@@ -6,8 +6,8 @@
       system = "x86_64-linux";
     in
     {
-      # test is a hostname for our machine
-      nixosConfigurations.opensearch = nixpkgs.lib.nixosSystem {
+      # mymachine is a hostname for our machine
+      nixosConfigurations.mymachine = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           ./configuration.nix
